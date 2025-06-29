@@ -4,17 +4,26 @@ import { Button, TextField } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Carlist from "./Carlist";
 import Snackbar from "@mui/material/Snackbar";
+import { Dispatch, SetStateAction } from 'react';
+
+interface LoginProps {
+  setUsername: Dispatch<SetStateAction<string | null>>;
+}
 
 type User={
     username:string;
     password:string;
 }
-function Login(){
+interface LoginProps {
+  setUsername: Dispatch<SetStateAction<string | null>>;
+}
+
+function Login({ setUsername }: LoginProps) {
     const [user, setUser]= useState<User>({
         username:'',
         password:''
     });
-    const [isAuthenticated, setAuth] = useState(false);
+    // const [isAuthenticated, setAuth] = useState(false);
     const [open, setOpen] = useState(false);
 
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>)=>{
@@ -35,17 +44,23 @@ function Login(){
 
             if(jwtToken !==null){
                 sessionStorage.setItem("jwt", jwtToken);
-                setAuth(true);
+                localStorage.setItem("token", jwtToken);
+                setUsername(user.username);
+                // setAuth(true);
             }
         })
         .catch(() => setOpen(true));
     }
 
     const handleLogout = () =>{
-        setAuth(false);
+        // setAuth(false);
         sessionStorage.setItem("jwt", "");
+        localStorage.setItem("token", "");
+        setUsername(null);
+
+        window.location.reload();
     }
-    if(isAuthenticated){
+    if(localStorage.getItem("token")){
         return <Carlist logout= {handleLogout} />;
     }
     else{
