@@ -38,8 +38,9 @@ function Carlist({logout}: CarlistProps) {
             sortable:false,
             filterable:false,
             disableColumnMenu:true,
-            renderCell:(params:GridCellParams)=>
+            renderCell:(params:GridCellParams)=>(
                 <EditCar carData={params.row} />
+            )
         },
         {
             field:'delete',
@@ -49,7 +50,10 @@ function Carlist({logout}: CarlistProps) {
             filterable:false,
             disableColumnMenu:true,
             renderCell:(params:GridCellParams)=>(
-                <IconButton aria-label="delete" size="small" 
+                <IconButton 
+                    aria-label="delete" 
+                    size="large"
+                    color="error" 
                     onClick={()=>{
                         if(window.confirm(`Are you sure you want to delete ${params.row.brand} ${params.row.model}?`)){    
                         mutate({

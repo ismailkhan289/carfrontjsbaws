@@ -74,9 +74,12 @@ function EditCar({carData}:FormProps){
     return(
         <>
         <Tooltip title="Edit Car">
-            <IconButton aria-label="edit" size="large" 
+            <IconButton
+                aria-label="edit"            
+                color="primary" 
+                size="large" 
                 onClick={handleClickOpen}>
-                    <EditIcon fontSize="small" />
+                <EditIcon fontSize="small" />
             </IconButton>
         </Tooltip>    
         <Dialog 
